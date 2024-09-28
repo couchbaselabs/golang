@@ -51,6 +51,11 @@ fi
 # If the manifest doesn't specify *anything*, do nothing.
 [ -z "${GOVERSION}" ] && exit
 
+# If it's SUPPORTED_NEWER/OLDER, determine corresponding major version.
+if [[ ${GOVERSION} =~ SUPPORTED_(NEWER|OLDER) ]]; then
+    GOVERSION=$(cat golang/versions/${GOVERSION}.txt)
+fi
+
 # Ok, there's some GOVERSION specified. To ensure we don't break when
 # building older product versions that aren't using the centralized
 # Go version management, if GOVERSION is a fully-specified minor
